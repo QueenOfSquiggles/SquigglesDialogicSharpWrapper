@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cghwahwx7emmi"]
+
+[ext_resource type="Script" path="res://Examples/HandleTimelines/LoadTimelineFromResource.cs" id="1_xknbh"]
+[ext_resource type="Resource" path="res://Examples/ExampleResources/Timelines/timeline_load_by_ref.dtl" id="2_xhgih"]
+
+[node name="LoadTimelineFromResource" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xknbh")
+_timelineResource = ExtResource("2_xhgih")
