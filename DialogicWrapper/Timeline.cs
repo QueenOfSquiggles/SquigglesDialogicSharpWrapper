@@ -28,14 +28,16 @@ public class Timeline {
   /// <returns>a resource instance of the timeline. Since it's a GDScript class, that's the best we can do</returns>
   public Resource Get() {
     var timelineRes = new Resource();
+    // looks like loading the script and attaching to a new resource object is the way to go???
     timelineRes.SetScript(GD.Load<Script>("res://addons/dialogic/Resources/timeline.gd"));
-
+    var flagUsesEvents = false;
     var eventsArr = new Godot.Collections.Array();
     foreach (var e in _events) {
       if (e is EventRaw er) {
         eventsArr.Add(er.RawTextCode); // oly case that isn't stored as a resource type
       }
       else {
+        flagUsesEvents = true;
         var eventRes = new Resource();
         eventRes.SetScript(GetScriptFor(e));
         e.Apply(ref eventRes);
@@ -43,6 +45,11 @@ public class Timeline {
       }
     }
     timelineRes.Set("events", eventsArr);
+
+    if (flagUsesEvents) {
+      // if we are passing events, this tells the Timeline that it doesn't need to parse text into events on its own
+      timelineRes.Set("events_processed", true);
+    }
     return timelineRes;
   }
 
